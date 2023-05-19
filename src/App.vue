@@ -249,5 +249,6 @@ export default defineComponent({
 
 .table-filter-slider {
   width: 500px;
+  margin-top: 2.6875rem;
 }
 </style>

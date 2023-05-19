@@ -62,6 +62,7 @@ export default defineComponent({
 }
 
 .calendar-text-field {
-  width: 230px !important;
+  width: 14.375rem !important;
+  margin-top: 1.25rem !important;
 }
 </style>

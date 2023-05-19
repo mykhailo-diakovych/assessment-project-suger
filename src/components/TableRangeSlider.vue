@@ -37,6 +37,7 @@ export default defineComponent({
   },
 });
 </script>
+
 <style>
 .v-text-field .v-field--single-line input {
   padding-top: 0.625rem !important;

@@ -40,7 +40,7 @@ export default defineComponent({
 </script>
 <style>
 .v-list__wrapper {
-  max-height: 450px;
+  max-height: 28.125rem;
   overflow-y: scroll;
 }
 </style>
