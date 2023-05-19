@@ -1,5 +1,5 @@
 <template>
-  <v-app class="mx-10 justify-space-between">
+  <v-app class="main-wrapper">
     <div class="d-flex flex-row align-center mt-8">
       <div class="d-flex w-75 align-center">
         <TableFilterButton
@@ -13,16 +13,19 @@
           :items="filteredStages"
           name="Stages"
         />
-        <TableDatePicker v-model="selectedDate" class="ml-2" />
-        <div class="w-50 ml-4">
-          <TableRangeSlider v-model:range="range" />
+        <TableDatePicker
+          :selected-date="selectedDate"
+          @update:selected-date="selectedDate = $event"
+        />
+        <div class="table-filter-slider ml-4">
+          <TableRangeSlider v-model="range" />
         </div>
       </div>
     </div>
     <TableChips @removeFilter="removeFilter" :chips="chips" />
     <v-data-table
       v-if="loading"
-      v-model:items-per-page="itemsPerPage"
+      :items-per-page="itemsPerPage"
       :headers="headerTable"
       :items="filteredData"
       item-value="name"
@@ -32,11 +35,10 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { DataTable } from "@/types/data-table";
+import { ChipsFormat, DataTable } from "@/types/data-table";
 import dayjs from "dayjs";
 import TableRangeSlider from "@/components/TableRangeSlider.vue";
 import {
-  ChipsFormat,
   DATE_FORMAT,
   HEADERS_TABLE,
   NAMES_FILTERS,
@@ -45,12 +47,13 @@ import {
 } from "@/constants/table-constants";
 import TableFilterButton from "@/components/TableFilterButton.vue";
 import { removeDuplicatesFromArrOfObj } from "@/helpers/removeDuplicatesFromArrOfObj";
-import TableDatePicker from "@/components/TableDatePicker.vue";
 import { getDataForColumns } from "@/helpers/getDataForColumns";
 import { isTimeInRange } from "@/helpers/isTimeInRange";
 import TableChips from "@/components/TableChips.vue";
 import { getHubspotStagesForPartner } from "@/helpers/getHubspotStagesForPartner";
 import axios from "axios";
+import { VDataTable } from "vuetify/lib";
+import TableDatePicker from "@/components/TableDatePicker.vue";
 
 export default defineComponent({
   components: {
@@ -58,17 +61,13 @@ export default defineComponent({
     TableDatePicker,
     TableFilterButton,
     TableRangeSlider,
+    VDataTable,
   },
   data() {
     return {
       range: [0, 300] as number[],
       loading: false,
-      selectedDate: [
-        "2023-02-01",
-        dayjs(new Date(new Date().getTime() + 9 * 24 * 60 * 60 * 1000)).format(
-          DATE_FORMAT
-        ),
-      ],
+      selectedDate: [] as string[],
       chips: [] as ChipsFormat[],
       currentStage: [] as string[],
       currentPartner: [] as string[],
@@ -108,7 +107,7 @@ export default defineComponent({
           Number(item?.probality) >= min && Number(item?.probality) <= max;
 
         const isTimeInRangeQuery =
-          !this.selectedDate ||
+          !this.selectedDate.length ||
           isTimeInRange(item.creationTimeFormatted, this.selectedDate);
 
         return (
@@ -140,12 +139,7 @@ export default defineComponent({
       }
 
       if (item.label === NAMES_FILTERS.DATE) {
-        this.selectedDate = [
-          "2023-02-01",
-          dayjs(
-            new Date(new Date().getTime() + 9 * 24 * 60 * 60 * 1000)
-          ).format(DATE_FORMAT),
-        ];
+        this.selectedDate = [];
         this.removeChip(item.label);
       }
     },
@@ -197,6 +191,9 @@ export default defineComponent({
   },
   watch: {
     selectedDate(val) {
+      if (!val.length) {
+        return;
+      }
       this.addNewChip({
         label: NAMES_FILTERS.DATE,
         title: `${dayjs(val[0]).format(DATE_FORMAT)} to ${dayjs(val[1]).format(
@@ -234,7 +231,7 @@ export default defineComponent({
   },
 });
 </script>
-<style>
+<style lang="scss">
 .v-table__wrapper {
   height: calc(100vh - 240px) !important;
   overflow-y: auto;
@@ -243,5 +240,14 @@ export default defineComponent({
 .v-data-table-footer {
   padding-top: 10px !important;
   padding-bottom: 10px !important;
+}
+
+.main-wrapper {
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.table-filter-slider {
+  width: 500px;
 }
 </style>

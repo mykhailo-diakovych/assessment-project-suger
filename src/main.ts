@@ -1,12 +1,12 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import { vuetify } from "./plugins/vuetify";
-import { loadFonts } from "./plugins/webfontloader";
-import VueDatepickerUi from "vue-datepicker-ui";
 import "vue-datepicker-ui/lib/vuedatepickerui.css";
+import Vue from "vue";
+import vuetify from "@/plugins/vuetify";
+import App from "@/App.vue";
+import "@mdi/font/css/materialdesignicons.css";
+import VueDatepickerUi from "vue-datepicker-ui";
 
-const app = createApp(App);
-app.component("Date-Picker", VueDatepickerUi);
-loadFonts();
-
-app.use(vuetify).mount("#app");
+Vue.component("Date-Picker", VueDatepickerUi);
+new Vue({
+  vuetify,
+  render: (h) => h(App),
+}).$mount("#app");

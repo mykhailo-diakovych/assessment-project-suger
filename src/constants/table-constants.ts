@@ -1,30 +1,22 @@
-import { VDataTable } from "vuetify/lib/labs/components";
-
-type Headers = InstanceType<typeof VDataTable>["headers"];
-type ArrayArrayItems<T> = T extends Array<Array<infer I>> ? I : never;
-export type ChipsFormat = {
-  title: string | string[] | number[];
-  label: string;
-};
-
-export type DataTableHeader = ArrayArrayItems<Headers>;
+import { ChipsFormat } from "@/types/data-table";
+import { DataTableHeader } from "vuetify";
 
 export const HEADERS_TABLE = [
   {
-    title: "ID",
+    text: "ID",
     align: "start",
     sortable: false,
-    key: "id",
+    value: "id",
   },
-  { title: "Name", align: "end", key: "name", sortable: false },
-  { title: "Source", align: "end", key: "partner" },
-  { title: "Creation time", align: "end", key: "creationTimeFormatted" },
-  { title: "Stage Name", align: "end", key: "stageName" },
-  { title: "Probability", align: "end", key: "probality" },
+  { text: "Name", align: "end", value: "name", sortable: false },
+  { text: "Source", align: "end", value: "partner" },
+  { text: "Creation time", align: "end", value: "creationTimeFormatted" },
+  { text: "Stage Name", align: "end", value: "stageName" },
+  { text: "Probability", align: "end", value: "probality" },
   {
-    title: "Last Updated",
+    text: "Last Updated",
     align: "end",
-    key: "lastUpdated",
+    value: "lastUpdated",
     sortable: false,
   },
 ] as DataTableHeader[];

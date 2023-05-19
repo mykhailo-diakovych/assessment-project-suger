@@ -1,16 +1,9 @@
-import "@mdi/font/css/materialdesignicons.css";
-import "vuetify/styles";
-import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
-import { VDataTable } from "vuetify/labs/VDataTable";
+import Vue from "vue";
+import Vuetify from "vuetify";
+import "vuetify/dist/vuetify.min.css";
 
-export const vuetify = createVuetify({
-  directives,
-  components: {
-    VDataTable,
-    ...components,
-  },
-});
+Vue.use(Vuetify);
 
-// // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
+const opts = {};
+
+export default new Vuetify(opts);

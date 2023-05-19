@@ -1,5 +1,5 @@
-import { DataTable } from "@/types/data-table";
-import { ChipsFormat, NAMES_FILTERS } from "@/constants/table-constants";
+import { ChipsFormat, DataTable } from "@/types/data-table";
+import { NAMES_FILTERS } from "@/constants/table-constants";
 
 export const getHubspotStagesForPartner = (
   item: DataTable,

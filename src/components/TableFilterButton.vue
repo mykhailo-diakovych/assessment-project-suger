@@ -1,14 +1,13 @@
 <template>
   <div>
-    <v-menu location="bottom" transition="scale-transition">
-      <template v-slot:activator="{ props }">
-        <v-btn size="large" rounded="lg" color="primary" v-bind="props">
+    <v-menu offset-y transition="scale-transition">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn large v-bind="attrs" v-on="on" rounded color="primary">
           {{ name }}
         </v-btn>
       </template>
       <v-list class="v-list__wrapper">
         <v-list-item
-          rounded="xl"
           @click="$emit('filterSource', item)"
           v-for="(item, index) in items"
           :key="index"

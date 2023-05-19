@@ -10,3 +10,8 @@ export interface DataTable {
   stageName?: string;
   creationTimeFormatted?: string;
 }
+
+export type ChipsFormat = {
+  title: string | string[] | number[];
+  label: string;
+};

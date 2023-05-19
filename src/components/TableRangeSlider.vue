@@ -3,7 +3,8 @@
     color="primary"
     v-model="rangeValue"
     :step="1"
-    :max="300"
+    max="300"
+    min="0"
     thumb-label="always"
     hide-details
   />
@@ -11,34 +12,27 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { VRangeSlider } from "vuetify/lib";
 
 export default defineComponent({
+  components: {
+    VRangeSlider,
+  },
   props: {
     range: {
       type: Array as () => number[],
-      default: () => [],
-      required: true,
+      default: () => [0, 300],
     },
   },
-  emits: ["update:range"],
+  emits: ["input"],
   computed: {
     rangeValue: {
       get(): number[] {
         return this.range;
       },
       set(value: number[]): void {
-        this.$emit("update:range", value);
+        this.$emit("input", value);
       },
-    },
-  },
-  methods: {
-    updateRange(index: number, event: Event): void {
-      const newValue = parseFloat((event.target as HTMLInputElement).value);
-      this.$emit("update:range", [
-        ...this.range.slice(0, index),
-        newValue,
-        ...this.range.slice(index + 1),
-      ]);
     },
   },
 });
